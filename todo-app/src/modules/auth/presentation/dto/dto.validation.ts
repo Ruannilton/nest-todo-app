@@ -5,3 +5,6 @@ export const PASSWORD_VALIDATION = {
   minNumbers: 1,
   minSymbols: 0,
 };
+
+export const NAME_MIN_LENGTH = 3;
+export const NAME_MAX_LENGTH = 64;
