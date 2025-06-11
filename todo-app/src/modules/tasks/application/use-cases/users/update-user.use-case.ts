@@ -3,6 +3,7 @@ import { UpdateUserDto } from '../../../domain/dto/update-user.dto';
 import { IUserRepository } from '../../contracts/user-repository.contract';
 import { User } from '../../../domain/entities/user.entity';
 import { Injectable } from '@nestjs/common';
+import { ResourceNotFoundException } from '../../exceptions/resource-not-found-exception';
 
 @Injectable()
 export class UpdateUserUseCase implements UseCase {
@@ -11,7 +12,7 @@ export class UpdateUserUseCase implements UseCase {
   async execute(input: UpdateUserDto): Promise<User> {
     const existingUser = await this.userRepository.getUserById(input.id.Id);
     if (!existingUser) {
-      throw new Error('User not found');
+      throw new ResourceNotFoundException('User', input.id.Id);
     }
 
     // Update user properties

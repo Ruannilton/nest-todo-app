@@ -31,9 +31,10 @@ export class AuthController {
   async signIn(
     @Body(new ValidationPipe()) request: SignInRequest,
   ): Promise<SignInResponseDto> {
-    const input = new SignInDto();
-    input.email = Email.create(request.email);
-    input.password = Password.create(request.password);
+    const input: SignInDto = {
+      email: Email.create(request.email),
+      password: Password.create(request.password),
+    };
 
     const { email, userId } = await this.signInUseCase.execute(input);
     const token = this.jwtPresenterService.generateToken(email, userId);
@@ -49,10 +50,12 @@ export class AuthController {
   async signUp(
     @Body(new ValidationPipe()) request: SignUpRequest,
   ): Promise<SignUpResponseDto> {
-    const input = new SignUpDto();
-    input.email = Email.create(request.email);
-    input.password = Password.create(request.password);
-    input.name = Name.create(request.firstName, request.lastName);
+    const input: SignUpDto = {
+      email: Email.create(request.email),
+      password: Password.create(request.password),
+      name: Name.create(request.firstName, request.lastName),
+    };
+
     const { email, userId } = await this.signUpUsecase.execute(input);
     const token = this.jwtPresenterService.generateToken(email, userId);
     return token;

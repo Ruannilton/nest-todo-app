@@ -3,6 +3,7 @@ import { IIdentityRepository } from 'src/modules/auth/application/contracts/iden
 import { Identity } from 'src/modules/auth/domain/entities/identity.entity';
 import { IdentityTable } from '../schemas/identity-table.table';
 import { Repository } from 'typeorm';
+import { DatabaseException } from '../../exceptions/database-exception';
 
 export class IdentityRepository extends IIdentityRepository {
   constructor(
@@ -13,24 +14,44 @@ export class IdentityRepository extends IIdentityRepository {
   }
 
   async createIdentity(identity: Identity): Promise<void> {
-    const identityTable = IdentityTable.fromDomain(identity);
-    await this.identityTableRepository.save(identityTable);
+    try {
+      const identityTable = IdentityTable.fromDomain(identity);
+      await this.identityTableRepository.save(identityTable);
+    } catch (e) {
+      const error = e as Error;
+      throw new DatabaseException(error);
+    }
   }
   async getIdentityByEmail(email: string): Promise<Identity | null> {
-    const identityTable = await this.identityTableRepository.findOne({
-      where: { email },
-    });
-    if (!identityTable) {
-      return null;
+    try {
+      const identityTable = await this.identityTableRepository.findOne({
+        where: { email },
+      });
+      if (!identityTable) {
+        return null;
+      }
+      return IdentityTable.toDomain(identityTable);
+    } catch (e) {
+      const error = e as Error;
+      throw new DatabaseException(error);
     }
-    return IdentityTable.toDomain(identityTable);
   }
   async updateIdentity(identity: Identity): Promise<void> {
-    const identityTable = IdentityTable.fromDomain(identity);
-    await this.identityTableRepository.save(identityTable);
+    try {
+      const identityTable = IdentityTable.fromDomain(identity);
+      await this.identityTableRepository.save(identityTable);
+    } catch (e) {
+      const error = e as Error;
+      throw new DatabaseException(error);
+    }
   }
 
   async deleteIdentity(email: string): Promise<void> {
-    await this.identityTableRepository.delete({ email });
+    try {
+      await this.identityTableRepository.delete({ email });
+    } catch (e) {
+      const error = e as Error;
+      throw new DatabaseException(error);
+    }
   }
 }

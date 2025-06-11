@@ -4,6 +4,7 @@ import { IUserRepository } from 'src/modules/tasks/application/contracts/user-re
 import { User } from 'src/modules/tasks/domain/entities/user.entity';
 import { Repository } from 'typeorm';
 import { UserTable } from '../schemas/user-table.table';
+import { DatabaseException } from '../../exceptions/database-exception';
 
 @Injectable()
 export class UserRepository extends IUserRepository {
@@ -14,24 +15,44 @@ export class UserRepository extends IUserRepository {
     super();
   }
   async createUser(user: User): Promise<User> {
-    const userTable = UserTable.fromDomain(user);
-    const userAdded = await this.repository.save(userTable);
-    return UserTable.toDomain(userAdded);
+    try {
+      const userTable = UserTable.fromDomain(user);
+      const userAdded = await this.repository.save(userTable);
+      return UserTable.toDomain(userAdded);
+    } catch (e) {
+      const error = e as Error;
+      throw new DatabaseException(error);
+    }
   }
   async getUserById(id: string): Promise<User | null> {
-    const userTable = await this.repository.findOne({ where: { id } });
-    if (!userTable) {
-      return null;
+    try {
+      const userTable = await this.repository.findOne({ where: { id } });
+      if (!userTable) {
+        return null;
+      }
+      return UserTable.toDomain(userTable);
+    } catch (e) {
+      const error = e as Error;
+      throw new DatabaseException(error);
     }
-    return UserTable.toDomain(userTable);
   }
 
   async updateUser(user: User): Promise<User> {
-    const userTable = UserTable.fromDomain(user);
-    const userUpdated = await this.repository.save(userTable);
-    return UserTable.toDomain(userUpdated);
+    try {
+      const userTable = UserTable.fromDomain(user);
+      const userUpdated = await this.repository.save(userTable);
+      return UserTable.toDomain(userUpdated);
+    } catch (e) {
+      const error = e as Error;
+      throw new DatabaseException(error);
+    }
   }
   async deleteUser(id: string): Promise<void> {
-    await this.repository.delete(id);
+    try {
+      await this.repository.delete(id);
+    } catch (e) {
+      const error = e as Error;
+      throw new DatabaseException(error);
+    }
   }
 }

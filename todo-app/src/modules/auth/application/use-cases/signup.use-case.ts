@@ -6,6 +6,7 @@ import { User } from '../../../tasks/domain/entities/user.entity';
 import { UserId } from '../../../tasks/domain/value-objects/user-id';
 import { Identity } from '../../domain/entities/identity.entity';
 import { Injectable } from '@nestjs/common';
+import { EmailAlreadyExistsException } from '../exceptions/email-already-exists-exception';
 
 @Injectable()
 export class SignUpUseCase implements UseCase {
@@ -23,7 +24,7 @@ export class SignUpUseCase implements UseCase {
     );
 
     if (existingIdentity) {
-      throw new Error('Email already exists');
+      throw new EmailAlreadyExistsException(email.Address);
     }
 
     const newUser = new User(UserId.empty(), input.name);

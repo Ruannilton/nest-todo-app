@@ -1,7 +1,7 @@
 import { Email } from '../value-objects/email';
 import { Password } from '../value-objects/password';
 
-export class SignInDto {
+export interface SignInDto {
   email: Email;
   password: Password;
 }

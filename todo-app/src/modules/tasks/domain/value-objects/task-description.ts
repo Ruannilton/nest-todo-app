@@ -1,3 +1,4 @@
+import { InvalidDescriptionException } from '../exceptions/invalid-description-exception';
 
 export class TaskDescription {
   Description: string;
@@ -8,12 +9,17 @@ export class TaskDescription {
     if (description == null || description.length === 0) {
       return new TaskDescription('');
     }
-    if (!description || description.length < 5) {
-      throw new Error('Task description must be at least 5 characters long');
+
+    if (!this.isValid(description)) {
+      throw new InvalidDescriptionException(description);
     }
-    if (description.length > 500) {
-      throw new Error('Task description must not exceed 500 characters');
-    }
+
     return new TaskDescription(description);
+  }
+
+  private static isValid(description: string): boolean {
+    return (
+      !!description || (description.length >= 5 && description.length <= 500)
+    );
   }
 }

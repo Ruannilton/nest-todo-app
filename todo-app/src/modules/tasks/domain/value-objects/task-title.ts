@@ -1,3 +1,4 @@
+import { InvalidTitleException } from '../exceptions/invalid-title-exception';
 
 export class TaskTitle {
   Title: string;
@@ -5,9 +6,13 @@ export class TaskTitle {
     this.Title = title;
   }
   static create(title: string): TaskTitle {
-    if (!title || title.length < 3) {
-      throw new Error('Task title must be at least 3 characters long');
+    if (!this.isValid(title)) {
+      throw new InvalidTitleException(title);
     }
     return new TaskTitle(title);
+  }
+
+  private static isValid(title: string): boolean {
+    return !!title && title.length >= 3 && title.length <= 100;
   }
 }

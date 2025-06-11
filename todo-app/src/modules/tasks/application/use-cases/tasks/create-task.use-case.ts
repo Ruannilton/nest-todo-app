@@ -10,9 +10,6 @@ export class CreateTaskUseCase implements IUseCase {
   async execute(input: CreateTaskDto): Promise<Task> {
     const newTask = Task.create(input.userId, input.title, input.description);
     const createdTask = await this.taskRepository.createTask(newTask);
-    if (!createdTask) {
-      throw new Error('Task creation failed');
-    }
     return createdTask;
   }
 }

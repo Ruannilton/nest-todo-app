@@ -1,3 +1,5 @@
+import { InvalidNameException } from '../exceptions/invalid-name-exception';
+
 export class Name {
   First: string;
   Last: string;
@@ -8,7 +10,7 @@ export class Name {
   }
   static create(first: string, last: string): Name {
     if (!first || !last) {
-      throw new Error('First and Last names are required');
+      throw new InvalidNameException(first, last);
     }
     return new Name(first, last);
   }

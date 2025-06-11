@@ -3,6 +3,8 @@ import { IIdentityRepository } from '../contracts/identity-repository.contract';
 import { SignInDto, SignInOutputDto } from '../../domain/dtos/signin.dto';
 import { IUserRepository } from '../../../tasks/application/contracts/user-repository.contract';
 import { Injectable } from '@nestjs/common';
+import { ResourceNotFoundException } from '../exceptions/resource-not-found-exception';
+import { WrongPasswordException } from '../exceptions/wrong-password-exception';
 
 @Injectable()
 export class SignInUseCase implements UseCase {
@@ -19,17 +21,17 @@ export class SignInUseCase implements UseCase {
     );
 
     if (!identity) {
-      throw new Error('Identity not found');
+      throw new ResourceNotFoundException('Identity', email.Address);
     }
 
     const isValid = identity.validatePassword(password);
     if (!isValid) {
-      throw new Error('Invalid password');
+      throw new WrongPasswordException();
     }
 
     const user = await this.userRepository.getUserById(identity.userId.Id);
     if (!user) {
-      throw new Error('User not found');
+      throw new ResourceNotFoundException('User', identity.userId.Id);
     }
 
     const response = new SignInOutputDto(user.id.Id, identity.email.Address);
