@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { UseCase } from 'src/core/contracts/use-case.contract';
-import { TaskId } from 'src/modules/tasks/domain/value-objects/task-id';
+import { UseCase } from '../../../../../core/contracts/use-case.contract';
+import { TaskId } from '../../../../../modules/tasks/domain/value-objects/task-id';
 import { ITaskRepository } from '../../contracts/task-repository.contract';
 import { ResourceNotFoundException } from '../../exceptions/resource-not-found-exception';
 

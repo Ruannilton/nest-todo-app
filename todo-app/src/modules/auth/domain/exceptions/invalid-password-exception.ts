@@ -1,4 +1,4 @@
-import { DomainException } from 'src/core/contracts/domain-exception';
+import { DomainException } from '../../../../core/contracts/domain-exception';
 
 export class InvalidPasswordException extends DomainException {
   constructor() {

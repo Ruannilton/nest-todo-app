@@ -1,4 +1,4 @@
-import { ApplicationException } from 'src/core/contracts/application-exception';
+import { ApplicationException } from '../../../../core/contracts/application-exception';
 
 export class WrongPasswordException extends ApplicationException {
   constructor() {

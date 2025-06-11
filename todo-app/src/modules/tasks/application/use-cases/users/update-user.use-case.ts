@@ -4,6 +4,7 @@ import { IUserRepository } from '../../contracts/user-repository.contract';
 import { User } from '../../../domain/entities/user.entity';
 import { Injectable } from '@nestjs/common';
 import { ResourceNotFoundException } from '../../exceptions/resource-not-found-exception';
+import { Name } from '../../../../tasks/domain/value-objects/name';
 
 @Injectable()
 export class UpdateUserUseCase implements UseCase {
@@ -16,7 +17,9 @@ export class UpdateUserUseCase implements UseCase {
     }
 
     // Update user properties
-    existingUser.name = input.name || existingUser.name;
+    const firstName = input.firstName || existingUser.name.First;
+    const lastName = input.lastName || existingUser.name.Last;
+    existingUser.name = Name.create(firstName, lastName);
 
     const updatedUser = await this.userRepository.updateUser(existingUser);
     return updatedUser;

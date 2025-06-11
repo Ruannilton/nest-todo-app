@@ -1,4 +1,4 @@
-import { UseCase } from 'src/core/contracts/use-case.contract';
+import { UseCase } from '../../../../core/contracts/use-case.contract';
 import { IIdentityRepository } from '../contracts/identity-repository.contract';
 import { SignInDto, SignInOutputDto } from '../../domain/dtos/signin.dto';
 import { IUserRepository } from '../../../tasks/application/contracts/user-repository.contract';

@@ -1,6 +1,6 @@
 import { InjectRepository } from '@nestjs/typeorm';
-import { IIdentityRepository } from 'src/modules/auth/application/contracts/identity-repository.contract';
-import { Identity } from 'src/modules/auth/domain/entities/identity.entity';
+import { IIdentityRepository } from '../../../../../modules/auth/application/contracts/identity-repository.contract';
+import { Identity } from '../../../../../modules/auth/domain/entities/identity.entity';
 import { IdentityTable } from '../schemas/identity-table.table';
 import { Repository } from 'typeorm';
 import { DatabaseException } from '../../exceptions/database-exception';

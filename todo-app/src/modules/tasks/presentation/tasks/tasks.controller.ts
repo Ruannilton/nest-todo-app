@@ -39,9 +39,9 @@ import { UpdateTaskDto } from '../../domain/dto/update-task.dto';
 import { ListTasksRequest } from './dto/list-tasks.dto';
 import { ListTasksUseCase } from '../../application/use-cases/tasks/list-tasks.use-case';
 import { ListTasksDto } from '../../domain/dto/list-tasks.dto';
-import { JwtAuthGuard } from 'src/modules/auth/service/jwt-guard.guard';
-import { CurrentUser } from 'src/modules/auth/service/current-user.decorator';
-import { CurrentUserDto } from 'src/modules/auth/domain/dtos/current-user.dto';
+import { JwtAuthGuard } from '../../../../modules/auth/service/jwt-guard.guard';
+import { CurrentUser } from '../../../../modules/auth/service/current-user.decorator';
+import { CurrentUserDto } from '../../../../modules/auth/domain/dtos/current-user.dto';
 import * as TasksDoc from './tasks.documentation';
 
 @ApiTags('Tarefas')

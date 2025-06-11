@@ -9,9 +9,13 @@ export class Name {
     this.Last = last;
   }
   static create(first: string, last: string): Name {
-    if (!first || !last) {
+    if (!this.isValidName(first) || !this.isValidName(last)) {
       throw new InvalidNameException(first, last);
     }
     return new Name(first, last);
+  }
+
+  private static isValidName(name: string): boolean {
+    return !!name && name.length >= 3 && name.length <= 64;
   }
 }

@@ -4,14 +4,14 @@ import * as DtoDoc from './dto.documentation';
 
 export class UpdateUserRequest {
   @ApiProperty(DtoDoc.UPDATE_FIRST_NAME_PROPERTY)
+  @Length(3, 50)
   @IsOptional()
   @IsString()
-  @Length(1, 50)
   firstName?: string;
 
   @ApiProperty(DtoDoc.UPDATE_LAST_NAME_PROPERTY)
+  @Length(3, 50)
   @IsOptional()
   @IsString()
-  @Length(1, 50)
   secondName?: string;
 }

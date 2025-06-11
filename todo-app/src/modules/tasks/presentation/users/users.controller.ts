@@ -25,10 +25,9 @@ import { UpdateUserUseCase } from '../../application/use-cases/users/update-user
 import { GetUseByIdUseCase } from '../../application/use-cases/users/get-user-by-id.use-case';
 import { DeleteUserUseCase } from '../../application/use-cases/users/delete-user.use-case';
 import { UserId } from '../../domain/value-objects/user-id';
-import { Name } from '../../domain/value-objects/name';
-import { JwtAuthGuard } from 'src/modules/auth/service/jwt-guard.guard';
-import { CurrentUserDto } from 'src/modules/auth/domain/dtos/current-user.dto';
-import { CurrentUser } from 'src/modules/auth/service/current-user.decorator';
+import { JwtAuthGuard } from '../../../../modules/auth/service/jwt-guard.guard';
+import { CurrentUserDto } from '../../../../modules/auth/domain/dtos/current-user.dto';
+import { CurrentUser } from '../../../../modules/auth/service/current-user.decorator';
 import * as UsersDoc from './users.documentation';
 
 @ApiTags('Usuários')
@@ -67,10 +66,9 @@ export class UsersController {
   ) {
     const input = new UpdateUserDto();
     input.id = UserId.create(user.userId);
-    input.name = Name.create(
-      updateUserDto.firstName!,
-      updateUserDto.secondName!,
-    );
+    input.firstName = updateUserDto.firstName || null;
+    input.lastName = updateUserDto.secondName || null;
+
     await this.updateUserUseCase.execute(input);
   }
 

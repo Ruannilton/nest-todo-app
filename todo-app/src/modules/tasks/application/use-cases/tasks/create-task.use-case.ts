@@ -1,4 +1,4 @@
-import { UseCase as IUseCase } from 'src/core/contracts/use-case.contract';
+import { UseCase as IUseCase } from '../../../../../core/contracts/use-case.contract';
 import { ITaskRepository } from '../../contracts/task-repository.contract';
 import { Injectable } from '@nestjs/common';
 import { Task } from '../../../domain/entities/task.entity';

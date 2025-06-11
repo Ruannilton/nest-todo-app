@@ -1,5 +1,5 @@
-import { ITaskRepository } from 'src/modules/tasks/application/contracts/task-repository.contract';
-import { Task } from 'src/modules/tasks/domain/entities/task.entity';
+import { ITaskRepository } from '../../../../../modules/tasks/application/contracts/task-repository.contract';
+import { Task } from '../../../../../modules/tasks/domain/entities/task.entity';
 import { Repository } from 'typeorm';
 import { TaskTable } from '../schemas/task-table.table';
 import { InjectRepository } from '@nestjs/typeorm';

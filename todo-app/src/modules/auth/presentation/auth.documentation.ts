@@ -1,7 +1,7 @@
 import {
   ErrorResponseDto,
   ValidationErrorResponseDto,
-} from 'src/modules/tasks/presentation/common/dto/error-response.dto';
+} from '../../tasks/presentation/common/dto/error-response.dto';
 import {
   SignInExamplesDto,
   SignInResponseExamplesDto,

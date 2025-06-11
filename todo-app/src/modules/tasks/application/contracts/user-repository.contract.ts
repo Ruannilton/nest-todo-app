@@ -1,4 +1,4 @@
-import { User } from 'src/modules/tasks/domain/entities/user.entity';
+import { User } from '../../../../modules/tasks/domain/entities/user.entity';
 
 export abstract class IUserRepository {
   abstract createUser(user: User): Promise<User>;
