@@ -1,21 +1,20 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { IsOptional, IsString, MinLength, MaxLength } from 'class-validator';
+import * as DtoValidation from './dto.validation';
+import * as DtoDoc from './dto.documentation';
 
 export class UpdateTaskRequest {
-  @ApiProperty({
-    description: 'Novo título da tarefa (mínimo 3 caracteres)',
-    example: 'Implementar autenticação JWT com refresh tokens',
-    minLength: 3,
-    maxLength: 200,
-    required: false,
-  })
+  @ApiProperty(DtoDoc.TASK_TITLE_UPDATE_PROPERTY)
+  @IsOptional()
+  @IsString()
+  @MinLength(DtoValidation.TASK_TITLE_VALIDATION.minLength)
+  @MaxLength(DtoValidation.TASK_TITLE_VALIDATION.maxLength)
   title?: string;
 
-  @ApiProperty({
-    description: 'Nova descrição da tarefa (opcional)',
-    example:
-      'Implementar sistema completo de autenticação com JWT access tokens e refresh tokens para maior segurança',
-    required: false,
-    maxLength: 1000,
-  })
+  @ApiProperty(DtoDoc.TASK_DESCRIPTION_UPDATE_PROPERTY)
+  @IsOptional()
+  @IsString()
+  @MinLength(DtoValidation.TASK_DESCRIPTION_VALIDATION.minLength)
+  @MaxLength(DtoValidation.TASK_DESCRIPTION_VALIDATION.maxLength)
   description?: string;
 }

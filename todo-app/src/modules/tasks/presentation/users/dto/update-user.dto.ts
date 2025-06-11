@@ -1,21 +1,17 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { IsString, IsOptional, Length } from 'class-validator';
+import * as DtoDoc from './dto.documentation';
 
 export class UpdateUserRequest {
-  @ApiProperty({
-    description: 'Novo primeiro nome do usuário',
-    example: 'João Carlos',
-    required: false,
-    minLength: 1,
-    maxLength: 50,
-  })
+  @ApiProperty(DtoDoc.UPDATE_FIRST_NAME_PROPERTY)
+  @IsOptional()
+  @IsString()
+  @Length(1, 50)
   firstName?: string;
 
-  @ApiProperty({
-    description: 'Novo sobrenome do usuário',
-    example: 'Santos Silva',
-    required: false,
-    minLength: 1,
-    maxLength: 50,
-  })
+  @ApiProperty(DtoDoc.UPDATE_LAST_NAME_PROPERTY)
+  @IsOptional()
+  @IsString()
+  @Length(1, 50)
   secondName?: string;
 }

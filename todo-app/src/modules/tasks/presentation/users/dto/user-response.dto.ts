@@ -1,36 +1,16 @@
 import { ApiProperty } from '@nestjs/swagger';
+import * as DtoDoc from './dto.documentation';
 
 export class UserResponseDto {
-  @ApiProperty({
-    description:
-      'Identificador único do usuário no formato UUID v4. Gerado automaticamente pelo sistema.',
-    example: '123e4567-e89b-12d3-a456-426614174000',
-    format: 'uuid',
-  })
+  @ApiProperty(DtoDoc.ID_PROPERTY)
   id: string;
 
-  @ApiProperty({
-    description: 'Primeiro nome do usuário conforme fornecido no cadastro.',
-    example: 'João',
-    minLength: 1,
-    maxLength: 50,
-  })
+  @ApiProperty(DtoDoc.FIRST_NAME_PROPERTY)
   firstName: string;
 
-  @ApiProperty({
-    description: 'Sobrenome do usuário conforme fornecido no cadastro.',
-    example: 'Silva',
-    minLength: 1,
-    maxLength: 50,
-  })
+  @ApiProperty(DtoDoc.LAST_NAME_PROPERTY)
   lastName: string;
 
-  @ApiProperty({
-    description:
-      'Endereço de email único do usuário. Usado para login e comunicações.',
-    example: 'joao.silva@email.com',
-    format: 'email',
-    maxLength: 255,
-  })
+  @ApiProperty(DtoDoc.EMAIL_PROPERTY)
   email: string;
 }
