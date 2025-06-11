@@ -1,34 +1,22 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { IsNotEmpty, IsEmail, IsStrongPassword } from 'class-validator';
+import * as DtoValidation from './dto.validation';
+import * as DtoDoc from './dto.documentation';
 
 export class SignUpRequest {
-  @ApiProperty({
-    description: 'Email único do usuário',
-    example: 'joao.silva@email.com',
-    format: 'email',
-  })
+  @ApiProperty(DtoDoc.EMAIL_PROPERTY)
+  @IsNotEmpty()
+  @IsEmail()
   email: string;
 
-  @ApiProperty({
-    description: 'Senha do usuário (mínimo 6 caracteres)',
-    example: 'senhaSegura123',
-    minLength: 6,
-    format: 'password',
-  })
+  @ApiProperty(DtoDoc.PASSWORD_PROPERTY)
+  @IsNotEmpty()
+  @IsStrongPassword(DtoValidation.PASSWORD_VALIDATION)
   password: string;
 
-  @ApiProperty({
-    description: 'Primeiro nome do usuário',
-    example: 'João',
-    minLength: 1,
-    maxLength: 50,
-  })
+  @ApiProperty(DtoDoc.FIRST_NAME_PROPERTY)
   firstName: string;
 
-  @ApiProperty({
-    description: 'Sobrenome do usuário',
-    example: 'Silva',
-    minLength: 1,
-    maxLength: 50,
-  })
+  @ApiProperty(DtoDoc.LAST_NAME_PROPERTY)
   lastName: string;
 }
