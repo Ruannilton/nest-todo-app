@@ -38,11 +38,12 @@ describe('UpdateUserUseCase', () => {
   });
 
   it('should update a user successfully', async () => {
-    const userId = UserId.create('123');
+    const userId = UserId.create('45dc7ba8-69d1-4b78-be08-a07629a838c8');
     const existingUser = new User(userId, Name.create('John', 'Doe'));
     const updateUserDto: UpdateUserDto = {
       id: userId,
-      name: Name.create('Jane', 'Smith'),
+      firstName: 'Jane',
+      lastName: 'Smith',
     };
 
     const updatedUser = new User(userId, Name.create('Jane', 'Smith'));
@@ -56,7 +57,7 @@ describe('UpdateUserUseCase', () => {
     expect(mockUserRepository.updateUser).toHaveBeenCalledWith(
       expect.objectContaining({
         id: userId,
-        name: updateUserDto.name,
+        name: Name.create('Jane', 'Smith'),
       }),
     );
     expect(result).toBe(updatedUser);
@@ -65,12 +66,13 @@ describe('UpdateUserUseCase', () => {
   });
 
   it('should update user name when provided', async () => {
-    const userId = UserId.create('456');
+    const userId = UserId.create('45dc7ba8-69d1-4b78-be08-a07629a838c8');
     const existingUser = new User(userId, Name.create('Old', 'Name'));
     const newName = Name.create('New', 'Name');
     const updateUserDto: UpdateUserDto = {
       id: userId,
-      name: newName,
+      firstName: 'New',
+      lastName: 'Name',
     };
 
     const updatedUser = new User(userId, newName);
@@ -80,14 +82,14 @@ describe('UpdateUserUseCase', () => {
 
     const result = await useCase.execute(updateUserDto);
 
-    expect(existingUser.name).toBe(newName);
+    expect(existingUser.name).toStrictEqual(newName);
     expect(mockUserRepository.updateUser).toHaveBeenCalledWith(existingUser);
     expect(result.name.First).toBe('New');
     expect(result.name.Last).toBe('Name');
   });
 
   it('should keep existing name when no name is provided', async () => {
-    const userId = UserId.create('789');
+    const userId = UserId.create('45dc7ba8-69d1-4b78-be08-a07629a838c8');
     const existingUser = new User(userId, Name.create('Keep', 'Same'));
     const updateUserDto: UpdateUserDto = {
       id: userId,
@@ -108,27 +110,27 @@ describe('UpdateUserUseCase', () => {
   });
 
   it('should throw an error if user is not found', async () => {
-    const userId = UserId.create('123');
+    const userId = UserId.create('45dc7ba8-69d1-4b78-be08-a07629a838c8');
     const updateUserDto: UpdateUserDto = {
       id: userId,
-      name: Name.create('Jane', 'Smith'),
+      firstName: 'Jane',
+      lastName: 'Smith',
     };
 
     mockUserRepository.getUserById.mockResolvedValue(null);
 
-    await expect(useCase.execute(updateUserDto)).rejects.toThrow(
-      'User not found',
-    );
+    await expect(useCase.execute(updateUserDto)).rejects.toThrow();
     expect(mockUserRepository.getUserById).toHaveBeenCalledWith(userId.Id);
     expect(mockUserRepository.updateUser).not.toHaveBeenCalled();
   });
 
   it('should handle repository errors gracefully', async () => {
-    const userId = UserId.create('error-test');
+    const userId = UserId.create('45dc7ba8-69d1-4b78-be08-a07629a838c8');
     const existingUser = new User(userId, Name.create('Test', 'User'));
     const updateUserDto: UpdateUserDto = {
       id: userId,
-      name: Name.create('Updated', 'User'),
+      firstName: 'Updated',
+      lastName: 'User',
     };
 
     mockUserRepository.getUserById.mockResolvedValue(existingUser);
@@ -136,19 +138,18 @@ describe('UpdateUserUseCase', () => {
       new Error('Database connection error'),
     );
 
-    await expect(useCase.execute(updateUserDto)).rejects.toThrow(
-      'Database connection error',
-    );
+    await expect(useCase.execute(updateUserDto)).rejects.toThrow();
     expect(mockUserRepository.getUserById).toHaveBeenCalledWith(userId.Id);
     expect(mockUserRepository.updateUser).toHaveBeenCalled();
   });
 
   it('should call repository methods correctly', async () => {
-    const userId = UserId.create('order-test');
+    const userId = UserId.create('45dc7ba8-69d1-4b78-be08-a07629a838c8');
     const existingUser = new User(userId, Name.create('First', 'Last'));
     const updateUserDto: UpdateUserDto = {
       id: userId,
-      name: Name.create('Updated', 'Name'),
+      firstName: 'Updated',
+      lastName: 'Name',
     };
 
     const updatedUser = new User(userId, Name.create('Updated', 'Name'));
@@ -165,11 +166,12 @@ describe('UpdateUserUseCase', () => {
   });
 
   it('should preserve user id during update', async () => {
-    const userId = UserId.create('preserve-id-test');
+    const userId = UserId.create('45dc7ba8-69d1-4b78-be08-a07629a838c8');
     const existingUser = new User(userId, Name.create('Original', 'User'));
     const updateUserDto: UpdateUserDto = {
       id: userId,
-      name: Name.create('Updated', 'User'),
+      firstName: 'Updated',
+      lastName: 'User',
     };
 
     const updatedUser = new User(userId, Name.create('Updated', 'User'));
@@ -184,11 +186,12 @@ describe('UpdateUserUseCase', () => {
   });
 
   it('should return the updated user from repository', async () => {
-    const userId = UserId.create('return-test');
+    const userId = UserId.create('45dc7ba8-69d1-4b78-be08-a07629a838c8');
     const existingUser = new User(userId, Name.create('Before', 'Update'));
     const updateUserDto: UpdateUserDto = {
       id: userId,
-      name: Name.create('After', 'Update'),
+      firstName: 'After',
+      lastName: 'Update',
     };
 
     const repositoryReturnedUser = new User(

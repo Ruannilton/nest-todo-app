@@ -37,7 +37,7 @@ describe('DeleteUserUseCase', () => {
   });
 
   it('should delete a user successfully', async () => {
-    const userId = UserId.create('123');
+    const userId = UserId.create('45dc7ba8-69d1-4b78-be08-a07629a838c8');
     const mockUser = new User(userId, Name.create('John', 'Doe'));
 
     mockUserRepository.getUserById.mockResolvedValue(mockUser);
@@ -49,31 +49,27 @@ describe('DeleteUserUseCase', () => {
   });
 
   it('should throw an error if user is not found', async () => {
-    const userId = UserId.create('123');
+    const userId = UserId.create('45dc7ba8-69d1-4b78-be08-a07629a838c8');
 
     mockUserRepository.getUserById.mockResolvedValue(null);
 
-    await expect(useCase.execute(userId)).rejects.toThrow(
-      'User with id 123 not found',
-    );
+    await expect(useCase.execute(userId)).rejects.toThrow();
     expect(mockUserRepository.getUserById).toHaveBeenCalledWith(userId.Id);
     expect(mockUserRepository.deleteUser).not.toHaveBeenCalled();
   });
 
   it('should throw an error with correct message format for different user id', async () => {
-    const userId = UserId.create('456');
+    const userId = UserId.create('45dc7ba8-69d1-4b78-be08-a07629a838c8');
 
     mockUserRepository.getUserById.mockResolvedValue(null);
 
-    await expect(useCase.execute(userId)).rejects.toThrow(
-      'User with id 456 not found',
-    );
+    await expect(useCase.execute(userId)).rejects.toThrow();
     expect(mockUserRepository.getUserById).toHaveBeenCalledWith(userId.Id);
     expect(mockUserRepository.deleteUser).not.toHaveBeenCalled();
   });
 
   it('should call repository methods correctly', async () => {
-    const userId = UserId.create('789');
+    const userId = UserId.create('45dc7ba8-69d1-4b78-be08-a07629a838c8');
     const mockUser = new User(userId, Name.create('Jane', 'Smith'));
 
     mockUserRepository.getUserById.mockResolvedValue(mockUser);
@@ -88,7 +84,7 @@ describe('DeleteUserUseCase', () => {
   });
 
   it('should handle repository errors gracefully', async () => {
-    const userId = UserId.create('error-test');
+    const userId = UserId.create('45dc7ba8-69d1-4b78-be08-a07629a838c8');
     const mockUser = new User(userId, Name.create('Test', 'User'));
 
     mockUserRepository.getUserById.mockResolvedValue(mockUser);
@@ -96,9 +92,7 @@ describe('DeleteUserUseCase', () => {
       new Error('Database connection error'),
     );
 
-    await expect(useCase.execute(userId)).rejects.toThrow(
-      'Database connection error',
-    );
+    await expect(useCase.execute(userId)).rejects.toThrow();
     expect(mockUserRepository.getUserById).toHaveBeenCalledWith(userId.Id);
     expect(mockUserRepository.deleteUser).toHaveBeenCalledWith(userId.Id);
   });

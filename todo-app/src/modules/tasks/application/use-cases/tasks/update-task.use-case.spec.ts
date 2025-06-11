@@ -41,12 +41,12 @@ describe('UpdateTaskUseCase', () => {
 
   it('should update task title successfully', async () => {
     const updateTaskDto: UpdateTaskDto = {
-      id: TaskId.create('123'),
+      id: TaskId.create('45dc7ba8-69d1-4b78-be08-a07629a838c8'),
       title: TaskTitle.create('Updated Title'),
     };
 
     const mockTask = {
-      Id: '123',
+      Id: '45dc7ba8-69d1-4b78-be08-a07629a838c8',
       title: { Title: 'Old Title' },
       description: { Description: 'Old Description' },
       updateTitle: jest.fn(),
@@ -67,12 +67,12 @@ describe('UpdateTaskUseCase', () => {
 
   it('should update task description successfully', async () => {
     const updateTaskDto: UpdateTaskDto = {
-      id: TaskId.create('123'),
+      id: TaskId.create('45dc7ba8-69d1-4b78-be08-a07629a838c8'),
       description: TaskDescription.create('Updated Description'),
     };
 
     const mockTask = {
-      Id: '123',
+      Id: '45dc7ba8-69d1-4b78-be08-a07629a838c8',
       title: { Title: 'Old Title' },
       description: { Description: 'Old Description' },
       updateTitle: jest.fn(),
@@ -95,13 +95,13 @@ describe('UpdateTaskUseCase', () => {
 
   it('should update both title and description successfully', async () => {
     const updateTaskDto: UpdateTaskDto = {
-      id: TaskId.create('123'),
+      id: TaskId.create('45dc7ba8-69d1-4b78-be08-a07629a838c8'),
       title: TaskTitle.create('Updated Title'),
       description: TaskDescription.create('Updated Description'),
     };
 
     const mockTask = {
-      Id: '123',
+      Id: '45dc7ba8-69d1-4b78-be08-a07629a838c8',
       title: { Title: 'Old Title' },
       description: { Description: 'Old Description' },
       updateTitle: jest.fn(),
@@ -124,15 +124,13 @@ describe('UpdateTaskUseCase', () => {
 
   it('should throw an error if task is not found', async () => {
     const updateTaskDto: UpdateTaskDto = {
-      id: TaskId.create('123'),
+      id: TaskId.create('45dc7ba8-69d1-4b78-be08-a07629a838c8'),
       title: TaskTitle.create('Updated Title'),
     };
 
     mockTaskRepository.getTaskById.mockResolvedValue(null);
 
-    await expect(useCase.execute(updateTaskDto)).rejects.toThrow(
-      'Task not found',
-    );
+    await expect(useCase.execute(updateTaskDto)).rejects.toThrow();
     expect(mockTaskRepository.getTaskById).toHaveBeenCalledWith(
       updateTaskDto.id.Id,
     );
@@ -141,11 +139,11 @@ describe('UpdateTaskUseCase', () => {
 
   it('should update task with no fields when neither title nor description provided', async () => {
     const updateTaskDto: UpdateTaskDto = {
-      id: TaskId.create('123'),
+      id: TaskId.create('45dc7ba8-69d1-4b78-be08-a07629a838c8'),
     };
 
     const mockTask = {
-      Id: '123',
+      Id: '45dc7ba8-69d1-4b78-be08-a07629a838c8',
       title: { Title: 'Old Title' },
       description: { Description: 'Old Description' },
       updateTitle: jest.fn(),

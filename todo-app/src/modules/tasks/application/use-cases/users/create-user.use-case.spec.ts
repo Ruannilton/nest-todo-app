@@ -40,7 +40,7 @@ describe('CreateUserUseCase', () => {
   it('should create a user successfully', async () => {
     const createUserDto = new CreateUserDto('John', 'Doe');
     const mockCreatedUser = new User(
-      UserId.create('user-123'),
+      UserId.create('45dc7ba8-69d1-4b78-be08-a07629a838c8'),
       Name.create('John', 'Doe'),
     );
 
@@ -59,7 +59,7 @@ describe('CreateUserUseCase', () => {
   it('should create a user with valid name', async () => {
     const createUserDto = new CreateUserDto('Jane', 'Smith');
     const mockCreatedUser = new User(
-      UserId.create('user-456'),
+      UserId.create('45dc7ba8-69d1-4b78-be08-a07629a838c8'),
       Name.create('Jane', 'Smith'),
     );
 
@@ -74,7 +74,7 @@ describe('CreateUserUseCase', () => {
   it('should handle repository response correctly', async () => {
     const createUserDto = new CreateUserDto('Test', 'User');
     const mockCreatedUser = new User(
-      UserId.create('user-789'),
+      UserId.create('45dc7ba8-69d1-4b78-be08-a07629a838c8'),
       Name.create('Test', 'User'),
     );
 

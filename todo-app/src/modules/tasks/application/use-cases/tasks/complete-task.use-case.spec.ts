@@ -1,6 +1,12 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { CompleteTaskUseCase } from './complete-task.use-case';
 import { ITaskRepository } from '../../contracts/task-repository.contract';
+import { TaskId } from '../../../domain/value-objects/task-id';
+import { Task } from '../../../domain/entities/task.entity';
+import { UserId } from '../../../domain/value-objects/user-id';
+import { TaskTitle } from '../../../domain/value-objects/task-title';
+import { TaskDescription } from '../../../domain/value-objects/task-description';
+import { ResourceNotFoundException } from '../../exceptions/resource-not-found-exception';
 
 describe('CompleteTaskUseCase', () => {
   let useCase: CompleteTaskUseCase;
@@ -32,14 +38,24 @@ describe('CompleteTaskUseCase', () => {
   });
 
   it('should complete a task successfully', async () => {
-    const taskId = { Id: '123' };
-    const mockTask = {
-      Id: '123',
-      markAsCompleted: jest.fn(),
-    };
+    const taskId = TaskId.create('45dc7ba8-69d1-4b78-be08-a07629a838c8');
+    const userId = UserId.create('45dc7ba8-69d1-4b78-be08-a07629a838c8');
+    const taskTitle = TaskTitle.create('Test Task');
+    const taskDescription = TaskDescription.create('Test Description');
+    const mockTask = new Task(
+      taskId,
+      userId,
+      taskTitle,
+      taskDescription,
+      false,
+      new Date(),
+      null,
+      null,
+    );
+    jest.spyOn(mockTask, 'markAsCompleted');
 
     mockTaskRepository.getTaskById.mockResolvedValue(mockTask);
-    mockTaskRepository.updateTask.mockResolvedValue({});
+    mockTaskRepository.updateTask.mockResolvedValue(mockTask);
 
     await expect(useCase.execute(taskId)).resolves.toBeUndefined();
     expect(mockTask.markAsCompleted).toHaveBeenCalled();
@@ -47,10 +63,12 @@ describe('CompleteTaskUseCase', () => {
   });
 
   it('should throw an error if task is not found', async () => {
-    const taskId = { Id: '123' };
+    const taskId = TaskId.create('45dc7ba8-69d1-4b78-be08-a07629a838c8');
 
     mockTaskRepository.getTaskById.mockResolvedValue(null);
 
-    await expect(useCase.execute(taskId)).rejects.toThrow('Task not found');
+    await expect(useCase.execute(taskId)).rejects.toThrow(
+      new ResourceNotFoundException('Task', taskId.Id),
+    );
   });
 });

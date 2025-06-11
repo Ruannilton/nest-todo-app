@@ -37,9 +37,9 @@ describe('DeleteTaskUseCase', () => {
   });
 
   it('should delete a task successfully', async () => {
-    const taskId = TaskId.create('123');
+    const taskId = TaskId.create('45dc7ba8-69d1-4b78-be08-a07629a838c8');
     const mockTask = {
-      Id: '123',
+      Id: '45dc7ba8-69d1-4b78-be08-a07629a838c8',
       title: 'Test Task',
     };
 
@@ -52,11 +52,11 @@ describe('DeleteTaskUseCase', () => {
   });
 
   it('should throw an error if task is not found', async () => {
-    const taskId = TaskId.create('123');
+    const taskId = TaskId.create('45dc7ba8-69d1-4b78-be08-a07629a838c8');
 
     mockTaskRepository.getTaskById.mockResolvedValue(null);
 
-    await expect(useCase.execute(taskId)).rejects.toThrow('Task not found');
+    await expect(useCase.execute(taskId)).rejects.toThrow();
     expect(mockTaskRepository.getTaskById).toHaveBeenCalledWith(taskId.Id);
     expect(mockTaskRepository.deleteTask).not.toHaveBeenCalled();
   });

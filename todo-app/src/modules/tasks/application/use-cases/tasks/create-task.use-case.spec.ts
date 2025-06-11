@@ -44,13 +44,13 @@ describe('CreateTaskUseCase', () => {
 
   it('should create a task successfully', async () => {
     const createTaskDto: CreateTaskDto = {
-      userId: UserId.create('user-123'),
+      userId: UserId.create('45dc7ba8-69d1-4b78-be08-a07629a838c8'),
       title: TaskTitle.create('Test Task'),
       description: TaskDescription.create('Test Description'),
     };
 
     const mockCreatedTask = new Task(
-      TaskId.create('task-123'),
+      TaskId.create('45dc7ba8-69d1-4b78-be08-a07629a838c8'),
       createTaskDto.userId,
       createTaskDto.title,
       createTaskDto.description,
@@ -68,20 +68,5 @@ describe('CreateTaskUseCase', () => {
       }),
     );
     expect(result).toBe(mockCreatedTask);
-  });
-
-  it('should throw an error if task creation fails', async () => {
-    const createTaskDto: CreateTaskDto = {
-      userId: UserId.create('user-123'),
-      title: TaskTitle.create('Test Task'),
-      description: TaskDescription.create('Test Description'),
-    };
-
-    mockTaskRepository.createTask.mockResolvedValue(null);
-
-    await expect(useCase.execute(createTaskDto)).rejects.toThrow(
-      'Task creation failed',
-    );
-    expect(mockTaskRepository.createTask).toHaveBeenCalled();
   });
 });

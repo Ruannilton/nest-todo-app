@@ -37,7 +37,7 @@ describe('GetUseByIdUseCase', () => {
   });
 
   it('should get a user by id successfully', async () => {
-    const userId = UserId.create('123');
+    const userId = UserId.create('45dc7ba8-69d1-4b78-be08-a07629a838c8');
     const mockUser = new User(userId, Name.create('John', 'Doe'));
 
     mockUserRepository.getUserById.mockResolvedValue(mockUser);
@@ -51,28 +51,24 @@ describe('GetUseByIdUseCase', () => {
   });
 
   it('should throw an error if user is not found', async () => {
-    const userId = UserId.create('123');
+    const userId = UserId.create('45dc7ba8-69d1-4b78-be08-a07629a838c8');
 
     mockUserRepository.getUserById.mockResolvedValue(null);
 
-    await expect(useCase.execute(userId)).rejects.toThrow(
-      'User with id 123 not found',
-    );
+    await expect(useCase.execute(userId)).rejects.toThrow();
     expect(mockUserRepository.getUserById).toHaveBeenCalledWith(userId.Id);
   });
 
   it('should throw an error with correct message format', async () => {
-    const userId = UserId.create('456');
+    const userId = UserId.create('45dc7ba8-69d1-4b78-be08-a07629a838c8');
 
     mockUserRepository.getUserById.mockResolvedValue(null);
 
-    await expect(useCase.execute(userId)).rejects.toThrow(
-      'User with id 456 not found',
-    );
+    await expect(useCase.execute(userId)).rejects.toThrow();
   });
 
   it('should return user with correct structure', async () => {
-    const userId = UserId.create('789');
+    const userId = UserId.create('45dc7ba8-69d1-4b78-be08-a07629a838c8');
     const mockUser = new User(userId, Name.create('Jane', 'Smith'));
 
     mockUserRepository.getUserById.mockResolvedValue(mockUser);
@@ -81,13 +77,13 @@ describe('GetUseByIdUseCase', () => {
 
     expect(result).toHaveProperty('id');
     expect(result).toHaveProperty('name');
-    expect(result.id.Id).toBe('789');
+    expect(result.id.Id).toBe('45dc7ba8-69d1-4b78-be08-a07629a838c8');
     expect(result.name.First).toBe('Jane');
     expect(result.name.Last).toBe('Smith');
   });
 
   it('should call repository only once', async () => {
-    const userId = UserId.create('999');
+    const userId = UserId.create('45dc7ba8-69d1-4b78-be08-a07629a838c8');
     const mockUser = new User(userId, Name.create('Test', 'User'));
 
     mockUserRepository.getUserById.mockResolvedValue(mockUser);

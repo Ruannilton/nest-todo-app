@@ -46,14 +46,14 @@ describe('ListTasksUseCase', () => {
 
   it('should list tasks successfully', async () => {
     const listTasksDto: ListTasksDto = {
-      userId: UserId.create('user-123'),
+      userId: UserId.create('45dc7ba8-69d1-4b78-be08-a07629a838c8'),
       page: 1,
       limit: 10,
     };
 
     const mockTask = new Task(
-      TaskId.create('task-123'),
-      UserId.create('user-123'),
+      TaskId.create('45dc7ba8-69d1-4b78-be08-a07629a838c8'),
+      UserId.create('45dc7ba8-69d1-4b78-be08-a07629a838c8'),
       TaskTitle.create('Test Task'),
       TaskDescription.create('Test Description'),
     );
@@ -75,7 +75,7 @@ describe('ListTasksUseCase', () => {
 
   it('should list tasks with filters', async () => {
     const listTasksDto: ListTasksDto = {
-      userId: UserId.create('user-123'),
+      userId: UserId.create('45dc7ba8-69d1-4b78-be08-a07629a838c8'),
       title: 'Test',
       completed: false,
       createdFrom: new Date('2024-01-01'),
@@ -101,7 +101,7 @@ describe('ListTasksUseCase', () => {
 
   it('should return empty result when no tasks found', async () => {
     const listTasksDto: ListTasksDto = {
-      userId: UserId.create('user-123'),
+      userId: UserId.create('45dc7ba8-69d1-4b78-be08-a07629a838c8'),
       page: 1,
       limit: 10,
     };
